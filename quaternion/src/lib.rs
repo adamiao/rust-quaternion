@@ -87,8 +87,27 @@ impl fmt::Display for Quaternion {
 
 #[cfg(test)]
 mod tests {
+    use crate::Quaternion;
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn addition() {
+        let quat1 = Quaternion::from_vec(&[2., 2., 2., 2.]);
+        let quat2 = Quaternion::from_vec(&[3., -2., -2., 3.]);
+        let quat3 = Quaternion::new(5., 0., 0., 5.);
+        assert_eq!(quat3, quat1 + quat2);
+    }
+    #[test]
+    fn multiplication_and_inverse() {
+        static EPSILON: f32 = 0.000001;
+        let quat1 = Quaternion::new(-2., 3., 4., 5.);
+        let quat2 = quat1.inv();
+        let identity = Quaternion::one();
+        assert!((&identity - &quat2 * &quat1).abs() < EPSILON && (identity - quat2 * quat1).abs() > 0.);
+    }
+
+    #[test]
+    #[should_panic]
+    fn divided_by_zero() {
+        let zero = Quaternion::origin();
+        let _panic_operation = zero.inv();
     }
 }
