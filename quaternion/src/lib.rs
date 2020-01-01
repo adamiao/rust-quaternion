@@ -88,6 +88,7 @@ impl fmt::Display for Quaternion {
 #[cfg(test)]
 mod tests {
     use crate::Quaternion;
+
     #[test]
     fn addition() {
         let quat1 = Quaternion::from_vec(&[2., 2., 2., 2.]);
@@ -95,6 +96,7 @@ mod tests {
         let quat3 = Quaternion::new(5., 0., 0., 5.);
         assert_eq!(quat3, quat1 + quat2);
     }
+    
     #[test]
     fn multiplication_and_inverse() {
         static EPSILON: f32 = 0.000001;
