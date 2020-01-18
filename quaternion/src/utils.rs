@@ -409,7 +409,7 @@ In what follows we'll define commutative scalar multiplication and division for 
 struct objects. This is a mathematical property of quaternions that we will want to have available
 in our code capabilities.
 
-If `c` is some constant of type belonging to the set {i32, f32}, then we want to be able to perform
+If `c` is some constant of type belonging to the set {i32, f64}, then we want to be able to perform
 the following operations:
                                                 c * q
                                                 q * c
@@ -422,12 +422,12 @@ scalar constant `c`.
 Remark: I also had to include the situations where we're borrowing the `Quaternion` object when
 doing the operations. Furthermore, I needed to include separate definitions for the order in which
 the operation happens. This means that we have four implementations per operation and per data type
-the constant `c` belongs to (i32, f32).
+the constant `c` belongs to (i32, f64).
 */
 
-// MULTIPLICATION OF `QUATERNION` AND `f32`
+// MULTIPLICATION OF `QUATERNION` AND `f64`
 
-impl ops::Mul<Quaternion> for f32 {
+impl ops::Mul<Quaternion> for f64 {
     type Output = Quaternion;
 
     fn mul(self, _rhs: Quaternion) -> Quaternion {
@@ -440,10 +440,10 @@ impl ops::Mul<Quaternion> for f32 {
     }
 }
 
-impl ops::Mul<f32> for Quaternion {
+impl ops::Mul<f64> for Quaternion {
     type Output = Quaternion;
 
-    fn mul(self, _rhs: f32) -> Quaternion {
+    fn mul(self, _rhs: f64) -> Quaternion {
         Quaternion {
             s: self.s * _rhs,
             i: self.i * _rhs,
@@ -453,7 +453,7 @@ impl ops::Mul<f32> for Quaternion {
     }
 }
 
-impl ops::Mul<&Quaternion> for f32 {
+impl ops::Mul<&Quaternion> for f64 {
     type Output = Quaternion;
 
     fn mul(self, _rhs: &Quaternion) -> Quaternion {
@@ -466,10 +466,10 @@ impl ops::Mul<&Quaternion> for f32 {
     }
 }
 
-impl ops::Mul<f32> for &Quaternion {
+impl ops::Mul<f64> for &Quaternion {
     type Output = Quaternion;
 
-    fn mul(self, _rhs: f32) -> Quaternion {
+    fn mul(self, _rhs: f64) -> Quaternion {
         Quaternion {
             s: self.s * _rhs,
             i: self.i * _rhs,
@@ -486,10 +486,10 @@ impl ops::Mul<Quaternion> for i32 {
 
     fn mul(self, _rhs: Quaternion) -> Quaternion {
         Quaternion {
-            s: (self as f32) * _rhs.s,
-            i: (self as f32) * _rhs.i,
-            j: (self as f32) * _rhs.j,
-            k: (self as f32) * _rhs.k,
+            s: (self as f64) * _rhs.s,
+            i: (self as f64) * _rhs.i,
+            j: (self as f64) * _rhs.j,
+            k: (self as f64) * _rhs.k,
         }
     }
 }
@@ -499,10 +499,10 @@ impl ops::Mul<i32> for Quaternion {
 
     fn mul(self, _rhs: i32) -> Quaternion {
         Quaternion {
-            s: self.s * (_rhs as f32),
-            i: self.i * (_rhs as f32),
-            j: self.j * (_rhs as f32),
-            k: self.k * (_rhs as f32),
+            s: self.s * (_rhs as f64),
+            i: self.i * (_rhs as f64),
+            j: self.j * (_rhs as f64),
+            k: self.k * (_rhs as f64),
         }
     }
 }
@@ -512,10 +512,10 @@ impl ops::Mul<&Quaternion> for i32 {
 
     fn mul(self, _rhs: &Quaternion) -> Quaternion {
         Quaternion {
-            s: (self as f32) * _rhs.s,
-            i: (self as f32) * _rhs.i,
-            j: (self as f32) * _rhs.j,
-            k: (self as f32) * _rhs.k,
+            s: (self as f64) * _rhs.s,
+            i: (self as f64) * _rhs.i,
+            j: (self as f64) * _rhs.j,
+            k: (self as f64) * _rhs.k,
         }
     }
 }
@@ -525,17 +525,17 @@ impl ops::Mul<i32> for &Quaternion {
 
     fn mul(self, _rhs: i32) -> Quaternion {
         Quaternion {
-            s: self.s * (_rhs as f32),
-            i: self.i * (_rhs as f32),
-            j: self.j * (_rhs as f32),
-            k: self.k * (_rhs as f32),
+            s: self.s * (_rhs as f64),
+            i: self.i * (_rhs as f64),
+            j: self.j * (_rhs as f64),
+            k: self.k * (_rhs as f64),
         }
     }
 }
 
-// DIVISION OF `QUATERNION` AND `f32`
+// DIVISION OF `QUATERNION` AND `f64`
 
-impl ops::Div<Quaternion> for f32 {
+impl ops::Div<Quaternion> for f64 {
     type Output = Quaternion;
 
     fn div(self, _rhs: Quaternion) -> Quaternion {
@@ -550,10 +550,10 @@ impl ops::Div<Quaternion> for f32 {
     }
 }
 
-impl ops::Div<f32> for Quaternion {
+impl ops::Div<f64> for Quaternion {
     type Output = Quaternion;
 
-    fn div(self, _rhs: f32) -> Quaternion {
+    fn div(self, _rhs: f64) -> Quaternion {
         Quaternion {
             s: self.s / _rhs,
             i: self.i / _rhs,
@@ -563,7 +563,7 @@ impl ops::Div<f32> for Quaternion {
     }
 }
 
-impl ops::Div<&Quaternion> for f32 {
+impl ops::Div<&Quaternion> for f64 {
     type Output = Quaternion;
 
     fn div(self, _rhs: &Quaternion) -> Quaternion {
@@ -578,10 +578,10 @@ impl ops::Div<&Quaternion> for f32 {
     }
 }
 
-impl ops::Div<f32> for &Quaternion {
+impl ops::Div<f64> for &Quaternion {
     type Output = Quaternion;
 
-    fn div(self, _rhs: f32) -> Quaternion {
+    fn div(self, _rhs: f64) -> Quaternion {
         Quaternion {
             s: self.s / _rhs,
             i: self.i / _rhs,
@@ -600,10 +600,10 @@ impl ops::Div<Quaternion> for i32 {
         let _rhs_abs_sqr = _rhs.abs().powf(2.);
 
         Quaternion {
-            s: ((self as f32) * _rhs.s)/_rhs_abs_sqr,
-            i: ((self as f32) * _rhs.i)/_rhs_abs_sqr,
-            j: ((self as f32) * _rhs.j)/_rhs_abs_sqr,
-            k: ((self as f32) * _rhs.k)/_rhs_abs_sqr,
+            s: ((self as f64) * _rhs.s)/_rhs_abs_sqr,
+            i: ((self as f64) * _rhs.i)/_rhs_abs_sqr,
+            j: ((self as f64) * _rhs.j)/_rhs_abs_sqr,
+            k: ((self as f64) * _rhs.k)/_rhs_abs_sqr,
         }
     }
 }
@@ -613,10 +613,10 @@ impl ops::Div<i32> for Quaternion {
 
     fn div(self, _rhs: i32) -> Quaternion {
         Quaternion {
-            s: self.s / (_rhs as f32),
-            i: self.i / (_rhs as f32),
-            j: self.j / (_rhs as f32),
-            k: self.k / (_rhs as f32),
+            s: self.s / (_rhs as f64),
+            i: self.i / (_rhs as f64),
+            j: self.j / (_rhs as f64),
+            k: self.k / (_rhs as f64),
         }
     }
 }
@@ -628,10 +628,10 @@ impl ops::Div<&Quaternion> for i32 {
         let _rhs_abs_sqr = _rhs.abs().powf(2.);
 
         Quaternion {
-            s: ((self as f32) * _rhs.s)/_rhs_abs_sqr,
-            i: ((self as f32) * _rhs.i)/_rhs_abs_sqr,
-            j: ((self as f32) * _rhs.j)/_rhs_abs_sqr,
-            k: ((self as f32) * _rhs.k)/_rhs_abs_sqr,
+            s: ((self as f64) * _rhs.s)/_rhs_abs_sqr,
+            i: ((self as f64) * _rhs.i)/_rhs_abs_sqr,
+            j: ((self as f64) * _rhs.j)/_rhs_abs_sqr,
+            k: ((self as f64) * _rhs.k)/_rhs_abs_sqr,
         }
     }
 }
@@ -641,10 +641,10 @@ impl ops::Div<i32> for &Quaternion {
 
     fn div(self, _rhs: i32) -> Quaternion {
         Quaternion {
-            s: self.s / (_rhs as f32),
-            i: self.i / (_rhs as f32),
-            j: self.j / (_rhs as f32),
-            k: self.k / (_rhs as f32),
+            s: self.s / (_rhs as f64),
+            i: self.i / (_rhs as f64),
+            j: self.j / (_rhs as f64),
+            k: self.k / (_rhs as f64),
         }
     }
 }

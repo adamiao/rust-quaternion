@@ -3,10 +3,10 @@ mod utils;
 
 #[derive(Debug)]
 pub struct Quaternion {
-    s: f32,
-    i: f32,
-    j: f32,
-    k: f32,
+    s: f64,
+    i: f64,
+    j: f64,
+    k: f64,
 }
 
 impl Quaternion {
@@ -14,25 +14,25 @@ impl Quaternion {
     // Creation of new `Quaternion` instance (origin).
     pub fn origin() -> Quaternion {
         Quaternion {
-            s: 0f32,
-            i: 0f32,
-            j: 0f32,
-            k: 0f32,
+            s: 0f64,
+            i: 0f64,
+            j: 0f64,
+            k: 0f64,
         }
     }
 
     // Creation of identity instance of `Quaternion`.
     pub fn one() -> Quaternion {
         Quaternion {
-            s: 1f32,
-            i: 0f32,
-            j: 0f32,
-            k: 0f32,
+            s: 1f64,
+            i: 0f64,
+            j: 0f64,
+            k: 0f64,
         }
     }
 
     // Creation of new instance of `Quaternion` by just feeding coordinates.
-    pub fn new(s: f32, i: f32, j: f32, k:f32) -> Quaternion {
+    pub fn new(s: f64, i: f64, j: f64, k:f64) -> Quaternion {
         Quaternion {
             s,
             i,
@@ -42,7 +42,7 @@ impl Quaternion {
     }
 
     // Creation of a `Quaternion` instance from a vector slice.
-    pub fn from_vec(point: &[f32]) -> Quaternion {
+    pub fn from_vec(point: &[f64]) -> Quaternion {
         Quaternion {
             s: point[0],
             i: point[1],
@@ -52,7 +52,7 @@ impl Quaternion {
     }
 
     // Here we implement the magnitude/absolute value of the `Quaternion` struct.
-    pub fn abs(&self) -> f32 {
+    pub fn abs(&self) -> f64 {
         (self.s.powf(2.)+self.i.powf(2.)+self.j.powf(2.)+self.k.powf(2.)).powf(0.5)
     }
 
@@ -68,7 +68,7 @@ impl Quaternion {
 
     // Here we implement the conjugation operation for the `Quaternion` struct.
     pub fn inv(&self) -> Quaternion {
-        if self.abs() == 0f32 {
+        if self.abs() == 0f64 {
             panic!("Can't divide by the zero quaternion!");
         }
         self.conj()/self.abs().powf(2.)
@@ -99,7 +99,7 @@ mod tests {
     
     #[test]
     fn multiplication_and_inverse() {
-        static EPSILON: f32 = 0.000001;
+        static EPSILON: f64 = 0.00000001;
         let quat1 = Quaternion::new(-2., 3., 4., 5.);
         let quat2 = quat1.inv();
         let identity = Quaternion::one();
